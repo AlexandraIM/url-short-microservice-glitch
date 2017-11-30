@@ -1,27 +1,22 @@
-Welcome to the Glitch BETA
-=========================
+# FreeCodeCamp API: URL Shortener Microservice
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+User stories:
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+* I can pass a URL as a parameter and I will receive a shortened URL in the JSON response
+* When I visit that shortened URL, it will redirect me to my original link.
 
-Find out more [about Glitch](https://glitch.com/about).
+### Example Usage
 
+https://url-short-microservice-glitch.glitch.me/new/https://www.google.com
 
-Your Project
-------------
+### Example creation output
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+{ "original_url":"http://www.google.com", "short_url":"https://url-short-microservice-glitch.glitch.me/SJJHO06ez" }
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+### Usage
 
+https://url-short-microservice-glitch.glitch.me/SJJHO06ez
 
-Made by [Fog Creek](https://fogcreek.com/)
--------------------
+### Will redirect to:
 
-\ ゜o゜)ノ
+https://www.google.com
