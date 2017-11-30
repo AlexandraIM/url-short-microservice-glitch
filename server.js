@@ -21,25 +21,27 @@ app.get("/new/:url(*)", function(request,response) {
       response.send("Failed connetc to DB! Error: " + err);
     }
     var collection = db.collection('links'); //set up collection
+    console.log(request.headers);
     var params = request.params.url; // set up url parameter
+    var shortLink = function (db,callback) {
+      if(validUrl.isUri(params)){
+        collection.findOne({"url": params}, {short: 1, _id: 0}, function (err, doc){
+          if(doc != null) {
+            response.json({original_URL: params, short_Url: request.headers.referer + doc.short})
+          } else {
+            let shortCode = shortid.generate();
+            let newUrl = { url: params, short: shortCode};
+            collection.insert([newUrl]);
+            response.json({ original_URL: params, short_Url:request.headers.referer + newUrl.short});
+          }
+        });
 
-    if(validUrl.isUri(params)){
-      collection.findOne({"url": params}, {short: 1, _id: 0}, function (err, doc){
-        if(doc != null) {
-          response.json({original_URL: params, short_Url: doc.short})
-        } else {
-          let shortCode = shortid.generate();
-          let newUrl = { url: params, short: shortCode};
-          collection.insert([newUrl]);
-          response.json({ original_URL: params, short_Url: newUrl.short});
-        }
-      });
+      } else {
+        response.json({ error : "Wrong url format, make sure you have a valid protocol and real site."});
+      }
+    };
       
-    } else {
-      response.json({ error : "Wrong url format, make sure you have a valid protocol and real site."});
-    }
-    
-      db.close();
+    shortLink(db, function() {db.close();});
     
   });
 })
